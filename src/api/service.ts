@@ -5,6 +5,9 @@ const BASE = `${window.location.protocol}//jsonplaceholder.typicode.com`;
 const delay = (ms: number): Promise<void> =>
   new Promise((res) => setTimeout(res, ms));
 
+const AGES = [
+  32, 24, 45, 47, 58
+]
 export class UserService {
   static async fetchUsers(filters?: UserFilters): Promise<User[]> {
     console.log(`Fetching users with Filter(${JSON.stringify(filters)}).`);
@@ -28,7 +31,7 @@ export class UserService {
     }
 
     console.log(`Fetched users with Filter(${JSON.stringify(filters)})`);
-    return users;
+    return users.map((u, i) => ({ ...u, age: AGES[i % AGES.length] }));
   }
 
   static async fetchPostsByUser(userId: number): Promise<Post[]> {
